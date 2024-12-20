@@ -5,12 +5,9 @@
     --light-gray: #f8f9fa;
 }
 
-
-.cosmos{
-    font-family: 'Roboto', sans-serif;
-    color: var(--text-color);
-    padding-top: 76px;
-    background-color:#790051
+.row {display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(600px, 2fr));
+    margin: auto;
 }
 
 body {
@@ -25,6 +22,12 @@ body {
     color: var(--text-color);
     padding-top: 76px;
     background-color:#790051 !important
+}
+.card-body1 {
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-color);
+    padding-top: 76px;
+    background-color:#ea0f0f !important
 }
 /* Навигация */
 .navbar {
@@ -97,8 +100,8 @@ body {
 }
 
 .btn-primary:hover {
-    background-color: #218838;
-    border-color: #218838;
+    background-color: #0aa734 ;
+    border-color:  #0aa734;
 }
 
 .btn-outline-success {
