@@ -1,0 +1,91 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="C:/projects/djangoshop/djangoProjectFlover/assets/css/main.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+        <title>Цветы</title>
+    </head>
+<body>
+    <div class="container">
+    <h1 class="text-center mb-4">Наши букеты</h1>
+    <!-- Фильтры -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="items-per-page">
+                <label for="itemsPerPage" class="me-2">Товаров на странице:</label>
+                <select id="itemsPerPage" class="form-select form-select-sm d-inline-block w-auto">
+                    <option value="9" {% if items_per_page == 9 %}selected{% endif %}>9</option>
+                    <option value="18" {% if items_per_page == 18 %}selected{% endif %}>18</option>
+                    <option value="27" {% if items_per_page == 27 %}selected{% endif %}>27</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="filters d-flex justify-content-end">
+                <button class="btn btn-outline-success me-2 active">Все</button>
+                <button class="btn btn-outline-success me-2">Розы</button>
+                <button class="btn btn-outline-success me-2">Тюльпаны</button>
+                <button class="btn btn-outline-success">Букеты</button>
+            </div>
+        </div>
+    </div>
+    <!-- Список товаров -->
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-img-wrapper">
+                    <img src="" class="card-img-top" alt="">
+                    <div class="discount-badge"></div>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Букет "Малина"</h5>
+                    <p class="card-text text-muted">Розовые розы- оригинальный комплимент любимой девушке.Роза-7 шт., зелень, пленка двойная, лента.</p>
+                    <div class="price-block">
+                        Старая цена
+                        <span class="old-price">3000 ₽</span>
+                        Цена со скидкой
+                        <span class="current-price">2300 ₽</span>
+                    </div>
+                    <div class="card-buttons mt-3">
+                        <a href="" class="btn btn-outline-success">Подробнее</a>
+                        <button class="btn btn-success add-to-cart" data-flower-id="">
+                            <i class="fas fa-shopping-cart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <p class="text-center">Товары не найдены</p>
+        </div>
+    </div>
+
+    <!-- Пагинация -->
+    <div class="pagination-wrapper mt-4">
+        <nav aria-label="Навигация по страницам">
+            <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1{% if items_per_page != 9 %}&items_per_page={{ items_per_page }}{% endif %}">&laquo;&laquo;</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ flowers.previous_page_number }}{% if items_per_page != 9 %}&items_per_page={{ items_per_page }}{% endif %}">&laquo;</a>
+                    </li>
+                        <li class="page-item active">
+                            <span class="page-link"></span>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ num }}{% if items_per_page != 9 %}&items_per_page={{ items_per_page }}{% endif %}"></a>
+                        </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ flowers.next_page_number }}{% if items_per_page != 9 %}&items_per_page={{ items_per_page }}{% endif %}">&raquo;</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ flowers.paginator.num_pages }}{% if items_per_page != 9 %}&items_per_page={{ items_per_page }}{% endif %}">&raquo;&raquo;</a>
+                    </li>
+            </ul>
+        </nav>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

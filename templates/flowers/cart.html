@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+ </head>
+ <body>
+    <div class="container">
+        <h1 class="mb-4">Корзина</h1>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="cart-item">
+                        <div class="row align-items-center">
+                            <div class="col-md-2">
+                                <img src="" alt="" class="">
+                            </div>
+                            <div class="col-md-4">
+                                <h5><a href="https://www.google.com/search?q=%D1%84%D0%BE%D1%82%D0%BE+%D0%BA%D1%80%D0%B0%D1%81%D0%B8%D0%B2%D0%BE%D0%B3%D0%BE+%D0%B1%D1%83%D0%BA%D0%B5%D1%82%D0%B0+%D1%80%D0%BE%D0%B7%D0%BE%D0%B2%D1%8B%D1%85+%D1%80%D0%BE%D0%B7#vhid=_hvrYZcFGUeaOM&vssid=__qJjZ4rGK7P11e8P6o7PmQo_38" class="text-decoration-none text-dark"></a></h5>
+                                <p class="text-muted mb-0"> ₽ за шт.</p>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="input-group">
+                                    <button class="btn btn-outline-secondary update-quantity" 
+                                            data-flower-id="" 
+                                            data-action="decrease">-</button>
+                                    <input type="number" class="form-control text-center" 
+                                        value="" min="1" max="99" 
+                                        data-flower-id="">
+                                    <button class="btn btn-outline-secondary update-quantity" 
+                                            data-flower-id="" 
+                                            data-action="increase">+</button>
+                                </div>
+                            </div>
+                            <div class="col-md-2 text-end">
+                                <span class="h5">₽</span>
+                            </div>
+                            <div class="col-md-1 text-end">
+                                <button class="btn btn-outline-danger remove-item" 
+                                        data-flower-id="">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Итого</h5>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Товары:</span>
+                                <span> ₽</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Доставка:</span>
+                                <span>0 ₽</span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between mb-3">
+                                <span class="h5">Итого к оплате:</span>
+                                <span class="h5"> ₽</span>
+                            </div>
+                            <form action="" method="post" class="d-grid">
+                                <button type="submit" class="btn btn-success">Оформить заказ</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center py-5">
+                <i class="fas fa-shopping-cart fa-3x text-muted mb-3"></i>
+                <h3>Ваша корзина пуста</h3>
+                <p class="text-muted">Добавьте товары из каталога</p>
+                <a href="" class="btn btn-success">Перейти в каталог</a>
+            </div>
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Обновление количества
+        const quantityInputs = document.querySelectorAll('.input-group input');
+        quantityInputs.forEach(input => {
+            input.addEventListener('change', function() {
+                updateQuantity(this.dataset.flowerId, this.value);
+            });
+        });
+
+        // Кнопки +/-
+        const updateButtons = document.querySelectorAll('.update-quantity');
+        updateButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const flowerId = this.dataset.flowerId;
+                const input = document.querySelector(`input[data-flower-id="${flowerId}"]`);
+                const currentValue = parseInt(input.value);
+                
+                if (this.dataset.action === 'increase' && currentValue < 99) {
+                    input.value = currentValue + 1;
+                } else if (this.dataset.action === 'decrease' && currentValue > 1) {
+                    input.value = currentValue - 1;
+                }
+                
+                updateQuantity(flowerId, input.value);
+            });
+        });
+
+        // Удаление товара
+        const removeButtons = document.querySelectorAll('.remove-item');
+        removeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                removeItem(this.dataset.flowerId);
+            });
+        });
+    });
+
+    function updateQuantity(flowerId, quantity) {
+        fetch(`/cart/update/${flowerId}/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken'),
+            },
+            body: JSON.stringify({ quantity: quantity })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            }
+        });
+    }
+
+    function removeItem(flowerId) {
+        if (confirm('Вы уверены, что хотите удалить этот товар из корзины?')) {
+            fetch(`/cart/remove/${flowerId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                }
+            });
+        }
+    }
+    </script>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+ <script src="assets/js/main.js"></script>
+</body>
+</html>
