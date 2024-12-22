@@ -1,0 +1,44 @@
+[
+  {
+    "model": "flowers.Flower",
+    "pk": 1,
+    "fields": {
+      "name": "Шампанское",
+      "description": "Белые розы- украшение любого праздника.Роза-10 шт., зелень, пленка двойная, лента.",
+      "price": 3000,
+      "image": "static/img/flowers/Шампанское.png",
+      "available": true,
+      "discount": 7,
+      "created_at": "2024-12-22 16:04:54.000",
+      "updated_at": "2024-12-22 16:04:54.000"
+    }
+  },
+  {
+    "model": "flowers.Flower",
+    "pk": 2,
+    "fields": {
+      "name": "Малина",
+      "description": "Розовые розы- оригинальный комплимент любимой девушке.Роза-7 шт., зелень, пленка двойная, лента.",
+      "price": 3000,
+      "image": "static/img/flowers/Малиновые розы.png",
+      "available": true,
+      "discount": 7,
+      "created_at": "2024-12-22 16:04:54.000",
+      "updated_at": "2024-12-22 16:04:54.000"
+    }
+  },
+  {
+    "model": "flowers.Flower",
+    "pk": 3,
+    "fields": {
+      "name": "Клубника",
+      "description": "Пиновидные розы- приятный подарок самым близким.Роза-20 шт., зелень, пленка двойная, лента.",
+      "price": 4500,
+      "image": "static/img/flowers/Пиновидные розы к букету клубника.png",
+      "available": true,
+      "discount": 7,
+      "created_at": "2024-12-22 16:04:54.000",
+      "updated_at": "2024-12-22 16:04:54.000"
+    }
+  }
+]

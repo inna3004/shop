@@ -14,21 +14,17 @@ body {
     font-family: 'Roboto', sans-serif;
     color: var(--text-color);
     padding-top: 76px;
-    background-color:#790051
+    /*background-color:#790051*/
 }
 
 .card-body {
     font-family: 'Roboto', sans-serif;
     color: var(--text-color);
     padding-top: 76px;
-    background-color:#790051 !important
+    background-color:#b2468e !important
 }
-.card-body1 {
-    font-family: 'Roboto', sans-serif;
-    color: var(--text-color);
-    padding-top: 76px;
-    background-color:#ea0f0f !important
-}
+
+
 /* Навигация */
 .navbar {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -104,18 +100,34 @@ body {
     border-color:  #0aa734;
 }
 
-.btn-outline-success {
-    border-color: var(--primary-color);
-    color: var(--primary-color);
-}
 
-.btn-outline-success:hover,
-.btn-outline-success.active {
-    background-color: var(--primary-color);
+.btn-outline-success {
+    background-color: transparent;
+    border-color: #d6e9c6;
+  }
+  
+.btn-outline-success:hover {
+    background-color: #b2468e;
     border-color: var(--primary-color);
     color: white;
-}
+  }
 
+  .btn.btn-outline-success.me-2 {
+    background-color: transparent; /* Цвет фона */
+    border-color: #0c0c0c; /* Цвет границы */
+    color: black;
+  }
+  
+  .btn.btn-outline-success.me-2:hover {
+    background-color:  #f39bd6; /* Цвет при наведении */
+    border-color: white; /* Цвет границы при наведении */
+    color: white; /* Цвет текста */
+  }
+  
+  .text-center.mb-4 {
+    font-family: 'Pacifico', cursive; /* Изящный курсивный шрифт */
+    font-style: italic; /* Курсив */
+  }
 /* Пагинация */
 .pagination-wrapper {
     margin: 30px 0;
@@ -138,6 +150,7 @@ body {
     margin-bottom: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    max-width: 100%;
 }
 
 .cart-total {
@@ -145,6 +158,7 @@ body {
     font-weight: bold;
     text-align: right;
     padding: 20px;
+    max-width: 100%;
 }
 
 /* Футер */
@@ -176,6 +190,7 @@ footer {
     
     .cart-item {
         padding: 10px;
+        max-width: 100%;
     }
     
     .pagination .page-item:not(.active):not(:first-child):not(:last-child) {
