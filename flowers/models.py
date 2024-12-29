@@ -11,6 +11,7 @@ class Flower(models.Model):
     discount = models.IntegerField(default=0, verbose_name="Скидка в %")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
 
     class Meta:
         verbose_name = "Цветок"
@@ -19,6 +20,11 @@ class Flower(models.Model):
 
     def __str__(self):
         return self.name
+    
+    @property
+    def discount_price(self):
+        return self.price - (self.price * self.discount / 100)
+    
 
 
 class Order(models.Model):
