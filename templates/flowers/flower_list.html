@@ -10,9 +10,9 @@
             <div class="items-per-page">
                 <label for="itemsPerPage" class="me-2">Товаров на странице:</label>
                 <select id="itemsPerPage" class="form-select form-select-sm d-inline-block w-auto">
-                    <option value="9" {% if items_per_page == 9 %}selected{% endif %}>9</option>
-                    <option value="18" {% if items_per_page == 18 %}selected{% endif %}>18</option>
-                    <option value="27" {% if items_per_page == 27 %}selected{% endif %}>27</option>
+                    <option value="9">9</option>
+                    <option value="18">18</option>
+                    <option value="27">27</option>
                 </select>
             </div>
         </div>
@@ -21,26 +21,28 @@
                 <button class="btn btn-outline-success me-2 active">Все</button>
                 <button class="btn btn-outline-success me-2">Розы</button>
                 <button class="btn btn-outline-success me-2">Тюльпаны</button>
-                <button class="btn btn-outline-success">Букеты</button>
+                <button class="btn btn-outline-success me-2">Букеты</button>
             </div>
         </div>
     </div>
     <!-- Список товаров -->
     <div class="row">
-        <div class="col-md-4 mb-4">
+        {% for flower in flowers %}
+            <div class="col-md-4 mb-4">
             <div class="card h-100">
                 <div class="card-img-wrapper">
-                    <img src="{% static 'img/flowers/Шампанское.png' %}" class="card-img-top" alt="Малиновые розы">
+                    <img src= {{flower.image}} class="card-img-top" alt="">
                     <div class="discount-badge"></div>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">Букет "Шампанское"</h5>
-                    <p class="card-text text-muted">Белые розы- украшение любого праздника.Роза-10 шт., зелень, пленка двойная, лента.</p>
+                    <h5 class="card-title">{{ flower.name }}</h5>
+                    <p class="card-text text-muted">{{ flower.description }}</p>
                     <div class="price-block">
                         Старая цена
-                        <span class="old-price">3000 ₽</span>
+                        <span class="old-price">{{ flower.price }} ₽</span>
+                        <br>
                         Цена со скидкой
-                        <span class="current-price">2300 ₽</span>
+                        <span class="current-price">{{ flower.discount_price }} ₽</span>
                     </div>
                     <div class="card-buttons mt-3">
                         <a href="{% url 'flower_detail' 1 %}" class="btn btn-outline-success">Подробнее</a>
@@ -50,88 +52,10 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <div class="card-img-wrapper">
-                    <img src="/static/img/flowers/Малиновые розы.png" class="card-img-top" alt="Малиновые розы">
-                    <div class="discount-badge"></div>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Букет "Малина"</h5>
-                    <p class="card-text text-muted">Розовые розы- оригинальный комплимент любимой девушке.Роза-7 шт., зелень, пленка двойная, лента.</p>
-                    <div class="price-block">
-                        Старая цена
-                        <span class="old-price">3000 ₽</span>
-                        Цена со скидкой
-                        <span class="current-price">2300 ₽</span>
-                    </div>
-                    <div class="card-buttons mt-3">
-                        <a href="" class="btn btn-outline-success">Подробнее</a>
-                        <button class="btn btn-success add-to-cart" data-flower-id="">
-                            <i class="fas fa-shopping-cart"></i>
-                        </button>
-                    </div>
-                </div>
             </div>
+        {% endfor %}
         </div>
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <div class="card-img-wrapper">
-                    <img src="/static/img/flowers/Пиновидные розы к букету клубника.png" class="card-img-top" alt="Пиновидные розы">
-                    <div class="discount-badge"></div>
                 </div>
-                <div class="card-body">
-                    <h5 class="card-title">Букет "Клубника"</h5>
-                    <p class="card-text text-muted">Пиновидные розы- приятный подарок самым близким.Роза-20 шт., зелень, пленка двойная, лента.</p>
-                    <div class="price-block">
-                        Старая цена
-                        <span class="old-price">4500 ₽</span>
-                        Цена со скидкой
-                        <span class="current-price">3000 ₽</span>
-                    </div>
-                    <div class="card-buttons mt-3">
-                        <a href="" class="btn btn-outline-success">Подробнее</a>
-                        <button class="btn btn-success add-to-cart" data-flower-id="">
-                            <i class="fas fa-shopping-cart"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100">
-                            <div class="card-img-wrapper">
-                                <img src="/static/img/flowers/Лучший день.png" class="card-img-top" alt="Пиновидные розы">
-                                <div class="discount-badge"></div>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">Букет "Лучший день"</h5>
-                                <p class="card-text text-muted">Микс роз в Ваш самый лучший день.Роза-20 шт., зелень, пленка двойная, лента.</p>
-                                <div class="price-block">
-                                    Старая цена
-                                    <span class="old-price">4500 ₽</span>
-                                    Цена со скидкой
-                                    <span class="current-price">3000 ₽</span>
-                                </div>
-                                <div class="card-buttons mt-3">
-                                    <a href="" class="btn btn-outline-success">Подробнее</a>
-                                    <button class="btn btn-success add-to-cart" data-flower-id="">
-                                        <i class="fas fa-shopping-cart"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-buttons mt-3">
-                        <a href="" class="btn btn-outline-success">Подробнее</a>
-                        <button class="btn btn-success add-to-cart" data-flower-id="">
-                            <i class="fas fa-shopping-cart"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="col-12">
             <p class="text-center">Товары не найдены</p>
         </div>
@@ -142,22 +66,22 @@
         <nav aria-label="Навигация по страницам">
             <ul class="pagination justify-content-center">
                     <li class="page-item">
-                        <a class="page-link" href="?page=1{% if items_per_page != 9 %}&items_per_page={{ items_per_page }}{% endif %}">&laquo;&laquo;</a>
+                        <a class="page-link" href="">&laquo;&laquo;</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ flowers.previous_page_number }}{% if items_per_page != 9 %}&items_per_page={{ items_per_page }}{% endif %}">&laquo;</a>
+                        <a class="page-link" href="">&laquo;</a>
                     </li>
                         <li class="page-item active">
                             <span class="page-link"></span>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="?page={{ num }}{% if items_per_page != 9 %}&items_per_page={{ items_per_page }}{% endif %}"></a>
+                            <a class="page-link" href=""></a>
                         </li>
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ flowers.next_page_number }}{% if items_per_page != 9 %}&items_per_page={{ items_per_page }}{% endif %}">&raquo;</a>
+                        <a class="page-link" href="">&raquo;</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ flowers.paginator.num_pages }}{% if items_per_page != 9 %}&items_per_page={{ items_per_page }}{% endif %}">&raquo;&raquo;</a>
+                        <a class="page-link" href="">&raquo;&raquo;</a>
                     </li>
             </ul>
         </nav>

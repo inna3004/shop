@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from .models import Flower, Order, OrderItem
 
 
@@ -9,8 +9,8 @@ def flower_list(request):
     flower_list = Flower.objects.filter(available=True)
     items_per_page = 9
 
+    page = int(request.GET.get('page', 1))
 
-    page = request.GET.get('page', 1)
     paginator = Paginator(flower_list, items_per_page)
 
     try:
@@ -18,12 +18,12 @@ def flower_list(request):
     except:
         flowers = paginator.page(1)
 
-    return render(request, 'flowers/flowers_list.html', {'flowers': flowers})
+    return render(request, 'flowers/flower_list.html', {'flowers': flowers})
 
 
 def flower_detail(request, flower_id):
-    #flower = get_object_or_404(Flower, id=flower_id)
-    return render(request, 'flowers/flower_detail.html')
+    flower = get_object_or_404(Flower, id=flower_id)
+    return render(request, 'flowers/flower_detail.html', {'flower': flower})
 
 
 @login_required
