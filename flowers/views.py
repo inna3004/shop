@@ -3,6 +3,17 @@ from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, Http404
 from .models import Flower, Order, OrderItem
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse_lazy
+from django.views import generic
+from flowers.forms import ARegistrationForm
+
+
+class RegisterView(generic.CreateView):
+    form_class = ARegistrationForm
+    success_url = reverse_lazy('login')
+    template_name = 'registration/register.html'
 
 
 def flower_list(request):
