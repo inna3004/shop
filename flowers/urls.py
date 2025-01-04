@@ -4,6 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 from flowers import views
+from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
@@ -11,5 +12,6 @@ urlpatterns = [
     path('<int:flower_id>/', views.flower_detail, name='flower_detail'),
     path('cart/', views.cart, name='cart'),
     path('add-to-cart/<int:flower_id>/', views.add_to_cart, name='add_to_cart'),
-    #path('checkout/', views.checkout, name='checkout'),
+    path('checkout/', views.checkout, name='checkout'),
+    path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
 ]

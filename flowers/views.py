@@ -7,7 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views import generic
-from flowers.forms import ARegistrationForm
+from users.forms import ARegistrationForm
+from django.contrib.auth import logout
 
 
 class RegisterView(generic.CreateView):
@@ -39,32 +40,42 @@ def flower_detail(request, flower_id):
 
 @login_required
 def add_to_cart(request, flower_id):
-    # if request.method == 'POST':
-    #     cart = request.session.get('cart', {})
-    #     cart[str(flower_id)] = cart.get(str(flower_id), 0) + 1
-    #     request.session['cart'] = cart
-    #     return JsonResponse({
-    #         'success': True,
-    #         'cart_count': sum(cart.values())
-    #     })
-    return JsonResponse({'success': False})
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'Неавторизованный доступ.'})
+
+    cart = request.session.get('cart', {})
+
+    try:
+        cart[str(flower_id)] = cart.get(str(flower_id), 0) + 1
+        request.session['cart'] = cart
+        return JsonResponse({
+            'success': True,
+            'cart_count': sum(cart.values())
+        })
+    except KeyError:
+        return JsonResponse({'error': 'Ошибка при добавлении товара в корзину.'})
+
+
+def checkout(request):
+    logout(request)
+    return redirect('flower_list')
+
 
 @login_required
 def cart(request):
-        # cart_items = request.session.get('cart', {})
-        # items = []
-        # total = 0
-        #
-        # for flower_id, quantity in cart_items.items():
-        #     flower = get_object_or_404(Flower, id=flower_id)
-        #     subtotal = flower.price * quantity
-        #     total += subtotal
-        #     items.append({
-        #         'flower': flower,
-        #         'quantity': quantity,
-        #         'subtotal': subtotal
-        #     })
-
+    # cart_items = request.session.get('cart', {})
+    # items = []
+    # total = 0
+    #
+    # for flower_id, quantity in cart_items.items():
+    #     flower = get_object_or_404(Flower, id=flower_id)
+    #     subtotal = flower.price * quantity
+    #     total += subtotal
+    #     items.append({
+    #         'flower': flower,
+    #         'quantity': quantity,
+    #         'subtotal': subtotal
+    #     })
 
     return render(request, 'flowers/cart.html')
     #
