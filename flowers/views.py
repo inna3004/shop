@@ -9,6 +9,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 from users.forms import ARegistrationForm
 from django.contrib.auth import logout
+from django.shortcuts import redirect
 
 
 class RegisterView(generic.CreateView):
@@ -56,26 +57,26 @@ def add_to_cart(request, flower_id):
         return JsonResponse({'error': 'Ошибка при добавлении товара в корзину.'})
 
 
-def checkout(request):
+def logout_view(request):
     logout(request)
     return redirect('flower_list')
 
 
 @login_required
 def cart(request):
-    # cart_items = request.session.get('cart', {})
-    # items = []
-    # total = 0
-    #
-    # for flower_id, quantity in cart_items.items():
-    #     flower = get_object_or_404(Flower, id=flower_id)
-    #     subtotal = flower.price * quantity
-    #     total += subtotal
-    #     items.append({
-    #         'flower': flower,
-    #         'quantity': quantity,
-    #         'subtotal': subtotal
-    #     })
+    cart_items = request.session.get('cart', {})
+    items = []
+    total = 0
+
+    for flower_id, quantity in cart_items.items():
+        flower = get_object_or_404(Flower, id=flower_id)
+        subtotal = flower.price * quantity
+        total += subtotal
+        items.append({
+        'flower': flower,
+        'quantity': quantity,
+        'subtotal': subtotal
+         })
 
     return render(request, 'flowers/cart.html')
     #
