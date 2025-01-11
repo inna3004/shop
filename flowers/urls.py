@@ -13,4 +13,5 @@ urlpatterns = [
     path('cart/', views.cart, name='cart'),
     path('add-to-cart/<int:flower_id>/', views.add_to_cart, name='add_to_cart'),
     path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
+    path('quantity/<int:flower_id>', views.get_flower_quantity, name='flowers_quantity')
 ]

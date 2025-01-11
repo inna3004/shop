@@ -36,6 +36,7 @@
                 </div>
                 <div class="card-body">
                     <h5 class="card-title">{{ flower.name }}</h5>
+                    <input type="hidden" id='flower_id' value="{{ flower.id }}"></input>
                     <p class="card-text text-muted">{{ flower.description }}</p>
                     <div class="price-block">
                         Старая цена
@@ -45,9 +46,9 @@
                         <span class="current-price">{{ flower.discount_price }} ₽</span>
                     </div>
                     <div class="card-buttons mt-3">
-                        <a href="{% url 'flower_detail' 1 %}" class="btn btn-outline-success">Подробнее</a>
-                        <button class="btn btn-success add-to-cart" data-flower-id="">
-                            <i class="fas fa-shopping-cart" href= "{% url 'cart' %}"></i>
+                        <a href="{% url 'flower_detail' flower.id %}" class="btn btn-outline-success">Подробнее</a>
+                        <button class="btn btn-success add-to-cart" data-flower-id="" href= "{% url 'cart' %}">
+                            <i class="fas fa-shopping-cart"></i>
                         </button>
                     </div>
                 </div>
@@ -87,5 +88,10 @@
         </nav>
     </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function addToCart() {
+
+    }
+</script>
 
 {% endblock %}

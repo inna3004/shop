@@ -86,3 +86,18 @@ def cart(request):
     #     return redirect('order_success')
     #
     # return redirect('cart')
+
+def get_flower_quantity(request, flower_id):
+    # flower = get_object_or_404(Flower, id=flower_id)
+    quantity = 3
+    if flower_id == 1:
+        quantity = 4
+    if flower_id == 2:
+        quantity = 2
+    if flower_id == 3:
+        quantity = 1
+    
+    return JsonResponse({'quantity': quantity})
+    
+
+
