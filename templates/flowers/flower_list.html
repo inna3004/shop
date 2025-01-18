@@ -47,9 +47,10 @@
                     </div>
                     <div class="card-buttons mt-3">
                         <a href="{% url 'flower_detail' flower.id %}" class="btn btn-outline-success">Подробнее</a>
-                        <button class="btn btn-success add-to-cart" data-flower-id="" href= "{% url 'cart' %}">
+                        <button type="submit" class="btn btn-success add-to-cart" id="add_to_cart_{{flower.id}}" onclick="addToCart({{flower.id}})">
                             <i class="fas fa-shopping-cart"></i>
                         </button>
+                        <p id="added_{{flower.id}}" style="hidden: true"></p>
                     </div>
                 </div>
             </div>
@@ -89,8 +90,23 @@
     </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    function addToCart() {
-
+    async function addToCart(flowerId) {
+        const headers = {
+            'X-CSRFToken': "{{ csrf_token }}",
+        }
+        const response = await fetch(`add-to-cart/${flowerId}/`, { method: 'POST', headers: headers})
+        const body = await response.json()
+        console.log(body)
+        if (!response.ok) {
+            alert('Ошибка при добавлении в корзину')
+            return
+        }
+        const btn = document.getElementById(`add_to_cart_${flowerId}`)
+        const addedItems = document.getElementById(`added_${flowerId}`)
+        btn.hidden = true
+        addedItems.hidden = false
+        addedItems.text = body.cart_count
+        
     }
 </script>
 

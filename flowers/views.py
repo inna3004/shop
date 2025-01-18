@@ -78,7 +78,7 @@ def cart(request):
         'subtotal': subtotal
          })
 
-    return render(request, 'flowers/cart.html')
+    return render(request, 'flowers/cart.html', {'items': items})
     #
     #     # Очищаем корзину
     #     request.session['cart'] = {}

@@ -3,6 +3,9 @@
 {% load static %}
     <div class="container">
         <h1 class="mb-4">Корзина</h1>
+            {% for i in items %}
+                <p>{{ i }}</p>
+            {% endfor %}
             <div class="row">
                 <div class="col-md-8">
                     <div class="cart-item">
