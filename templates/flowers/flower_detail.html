@@ -75,20 +75,43 @@
         </div>
 
         <script>
-        function incrementQuantity() {
+
+        function getFlowerId() {
+            const rawUrl = window.location.href
+            const url = new URL(rawUrl)
+            const pathname = url.pathname;
+            // Используем регулярное выражение для извлечения числа из pathname
+            const matches = pathname.match(/\/(\d+)\//);
+            return matches ? matches[1] : null;
+        }
+        
+        async function incrementQuantity() {
             const input = document.getElementById('quantity');
             const currentValue = parseInt(input.value);
-            if (currentValue < 99) {
+            const quantity = await getMaxQuantity()
+            if (currentValue < 99 && currentValue < quantity) {
                 input.value = currentValue + 1;
             }
         }
 
-        function decrementQuantity() {
+        async function decrementQuantity() {
             const input = document.getElementById('quantity');
             const currentValue = parseInt(input.value);
+
             if (currentValue > 1) {
                 input.value = currentValue - 1;
             }
         }
+
+        async function getMaxQuantity() {
+            const id = getFlowerId()
+            
+            const response = await fetch('/flowers/quantity/' + id)
+
+            const data = await response.json()
+            return data.quantity
+
+        }
+
         </script>
 {% endblock %}
