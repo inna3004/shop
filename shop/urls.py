@@ -14,9 +14,17 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from flowers.views import RegisterView, logout_view, cart, add_to_cart
+from shop import settings
+from rest_framework import routers
+from flowers.views import FlowersViewSet
+
+# для api
+router = routers.DefaultRouter()
+router.register(r'flowers', FlowersViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,5 +33,10 @@ urlpatterns = [
     path('accounts/register/', RegisterView.as_view(), name='register'),
     path('logout/', logout_view, name='logout'),
     path('cart', cart, name='cart'),
+    # для api
+    path('api-auth/', include('rest_framework.urls')),
+    path('api/', include(router.urls)),
+
 ]
+
 
