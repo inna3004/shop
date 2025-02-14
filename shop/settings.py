@@ -72,13 +72,16 @@ WSGI_APPLICATION = 'shop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mydatabase',
-        'USER': 'myuser',
-        'PASSWORD': 'mypassword',
-        'HOST': 'localhost', # ЕСЛИ ЗАПУСКАЕМ ЧЕРЕЗ docker-compose, то меняем на postgres
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'pgpwd4habr',
+        'HOST': 'localhost', # ЕСЛИ ЗАПУСКАЕМ ЧЕРЕЗ
         'PORT': '5432',
+        'OPTIONS': {
+            'client_encoding': 'UTF8',
+        },
+        }
     }
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
