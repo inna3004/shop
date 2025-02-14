@@ -1,20 +1,16 @@
-FROM python:3.11-slim
+FROM python:3.11
 
+# Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Установка зависимостей системы
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    libpq-dev
+# Копируем файлы проекта
+COPY . .
 
-# Копируем файл зависимостей
-COPY requirements.txt /app/
-
-# Устанавливаем зависимости Python
+# Устанавливаем зависимости
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Копируем код приложения
-COPY . /app
+# Собираем статику
+RUN python manage.py collectstatic --noinput
 
-# Открываем порт 8000
-EXPOSE 8000
+# Запускаем приложение через Gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "shop.wsgi:application"]

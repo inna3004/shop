@@ -10,6 +10,9 @@ from django.views import generic
 from users.forms import ARegistrationForm
 from django.contrib.auth import logout
 from django.shortcuts import redirect
+from rest_framework import routers, serializers, viewsets
+from flowers.serializers import FlowerSerializer
+from flowers.warehouse_client import WarehouseClient
 
 
 class RegisterView(generic.CreateView):
@@ -98,6 +101,22 @@ def get_flower_quantity(request, flower_id):
         quantity = 1
     
     return JsonResponse({'quantity': quantity})
+
+
+def buy_flower(request, flower_id):
+    flower = get_object_or_404(Flower, id=flower_id)
+    warehouse = WarehouseClient()
+    available_count = warehouse.check_flower_availability(flower)
+    if not available_count or available_count == 0:
+        return redirect('flower_list')
+    # логика оплаты и тд
+    #warehouse.start_assemble(order)
+
+
+# для API
+class FlowersViewSet(viewsets.ModelViewSet):
+    queryset = Flower.objects.all()
+    serializer_class = FlowerSerializer
     
 
 
