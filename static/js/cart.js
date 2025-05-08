@@ -6,6 +6,22 @@ document.addEventListener('DOMContentLoaded', function() {
         delay: 2000
     });
 
+
+fetch('/create-payment', {
+    method: 'POST',
+    body: JSON.stringify(orderDetails),
+    headers: {
+        'Content-Type': 'application/json'
+    }
+})
+.then(response => response.json())
+.then(data => {
+    window.location.href = data.payment_url; // Перенаправление на страницу оплаты
+})
+.catch(error => console.error('Ошибка:', error));
+
+
+
     // Обработчики кнопок + и -
     const decreaseButtons = document.querySelectorAll('.decrease-quantity');
     const increaseButtons = document.querySelectorAll('.increase-quantity');
@@ -117,6 +133,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         toast.show();
     }
+
 
     function getCookie(name) {
         let cookieValue = null;

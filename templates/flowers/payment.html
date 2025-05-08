@@ -1,0 +1,34 @@
+{% extends "../base.html" %}
+{% block content %}
+{% load static %}
+<form id="payment-form" action="{% url 'create_payment' %}" method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-success">Оплатить</button>
+</form>
+
+<script>
+    document.getElementById('payment-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Предотвращаем стандартное поведение формы
+
+        fetch(this.action, {
+            method: 'POST',
+            body: new FormData(this),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.payment_url) {
+                // Перенаправляем пользователя на страницу оплаты
+                window.location.href = data.payment_url;
+            } else {
+                // Обработка ошибок, если payment_url не возвращается
+                console.error('Ошибка при получении URL для оплаты:', data);
+                alert('Произошла ошибка. Пожалуйста, попробуйте еще раз.');
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка:', error);
+            alert('Произошла ошибка. Пожалуйста, попробуйте еще раз.');
+        });
+    });
+</script>
+{% endblock %}

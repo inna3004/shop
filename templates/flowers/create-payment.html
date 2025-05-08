@@ -1,0 +1,8 @@
+{% extends "../base.html" %}
+{% block content %}
+{% load static %}
+<form action="{% url 'create_payment' %}" method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-success">Оплатить</button>
+</form>
+{% endblock %}

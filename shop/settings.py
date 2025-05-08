@@ -91,6 +91,8 @@ DATABASES = {
         },
         }
     }
+YOOKASSA_SHOP_ID = '1061319'
+YOOKASSA_SECRET_KEY = 'test_XB0FAEmuhfH7RgVefumjyRjLw1pOWRr7xb2iZVv51Us'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

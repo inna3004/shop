@@ -13,8 +13,12 @@ from django.shortcuts import redirect
 from rest_framework import routers, serializers, viewsets
 from flowers.serializers import FlowerSerializer
 from flowers.warehouse_client import WarehouseClient
+from yookassa import Configuration, Payment
+from django.shortcuts import render
+from django.http import JsonResponse
+from shop.settings import YOOKASSA_SHOP_ID, YOOKASSA_SECRET_KEY
 
-
+Configuration.configure(YOOKASSA_SHOP_ID, YOOKASSA_SECRET_KEY)
 class RegisterView(generic.CreateView):
     form_class = ARegistrationForm
     success_url = reverse_lazy('login')
@@ -69,19 +73,25 @@ def logout_view(request):
 def cart(request):
     cart_items = request.session.get('cart', {})
     items = []
-    total = 0
+    total_price = 0
+    total_quantity = 0  # Переменная для подсчета общего количества товаров
 
     for flower_id, quantity in cart_items.items():
         flower = get_object_or_404(Flower, id=flower_id)
         subtotal = flower.price * quantity
-        total += subtotal
+        total_price += subtotal
+        total_quantity += quantity  # Увеличиваем общее количество
         items.append({
-        'flower': flower,
-        'quantity': quantity,
-        'subtotal': subtotal
-         })
+            'flower': flower,
+            'quantity': quantity,
+            'subtotal': subtotal
+        })
 
-    return render(request, 'flowers/cart.html', {'items': items})
+    return render(request, 'flowers/cart.html', {
+        'items': items,
+        'total_price': total_price,
+        'total_quantity': total_quantity  # Передаем общее количество в шаблон
+    })
     #
     #     # Очищаем корзину
     #     request.session['cart'] = {}
@@ -111,6 +121,26 @@ def buy_flower(request, flower_id):
         return redirect('flower_list')
     # логика оплаты и тд
     #warehouse.start_assemble(order)
+
+def create_payment(request):
+    if request.method == 'POST':
+        payment = Payment.create({
+            "amount": {
+                "value": "100.00",  # Сумма платежа
+                "currency": "RUB"
+            },
+            "confirmation": {
+                "type": "redirect",
+                "return_url": "https://your-domain.com/success/"
+            },
+            "capture": True,
+            "description": "Тестовый платеж"
+        })
+
+        return JsonResponse({'payment_url': payment.confirmation.confirmation_url})
+
+    return render(request, 'flowers/payment.html')
+
 
 
 # для API

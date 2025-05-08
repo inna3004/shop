@@ -30,9 +30,7 @@
                     </li>
                     <div class="position-relative">
     <a href="{% url 'cart' %}" class="btn btn-outline-success">
-        <i class="fas fa-shopping-cart"></i>
         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger cart-counter {% if not request.session.cart %}d-none{% endif %}">
-            {{ request.session.cart.values|sum|default:0 }}
         </span>
     </a>
 </div>

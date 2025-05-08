@@ -21,6 +21,7 @@ from flowers.views import RegisterView, logout_view, cart, add_to_cart
 from shop import settings
 from rest_framework import routers
 from flowers.views import FlowersViewSet
+from flowers.views import create_payment
 
 # для api
 router = routers.DefaultRouter()
@@ -33,10 +34,12 @@ urlpatterns = [
     path('accounts/register/', RegisterView.as_view(), name='register'),
     path('logout/', logout_view, name='logout'),
     path('cart', cart, name='cart'),
+    path('create-payment/', create_payment, name='create_payment'),
     # для api
     path('api-auth/', include('rest_framework.urls')),
     path('api/', include(router.urls)),
 
 ]
+
 
 
